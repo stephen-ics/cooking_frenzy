@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 
 public class Player : MonoBehaviour
 {
@@ -9,8 +10,29 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        Vector2 inputVector = new Vector2(0, 0);
+        if (Input.GetKey(KeyCode.W))
+        {
+            inputVector.y = 1;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            inputVector.y = -1;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            inputVector.x = -1;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            inputVector.x = 1;
+        }
         
+        inputVector.Normalize();
+        
+        Vector3 moveDirection = new Vector3(inputVector.x, 0, inputVector.y) * Time.deltaTime * 30;
+        transform.position += moveDirection;
     }
 }
